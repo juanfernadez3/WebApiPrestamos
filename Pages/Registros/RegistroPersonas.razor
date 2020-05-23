@@ -1,0 +1,173 @@
+﻿@page "/RegistroPersonas"
+
+@using PrimerRegistro.Models;
+@using PrimerRegistro.BLL;
+
+@inject IToastService toast
+
+<EditForm Model="personas" OnValidSubmit="Guardar" >
+    <DataAnnotationsValidator/>
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Registro Personas
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <form>
+                @*PerosnasID*@
+                <div class="form-row" align-items-center>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>
+                                PersonasID:
+                            </label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="personas.PersonaID" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-Text" @onclick="Buscar">
+                                        <span class="oi oi-zoom-in" />Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Nombre*@
+                <div>
+                    <label>
+                        Nombre:
+                    </label>
+                    <InputText @bind-Value="personas.Nombre" class="form-control" />
+                    <ValidationMessage For="@(() => personas.Nombre)" />
+                    <small id="NameInLineHelper" class="text-muted">
+                        El campo Nombre debe de estar lleno.
+                    </small>
+                </div>
+
+                @*Télefono*@
+                <div>
+                    <label>
+                        Télefono:
+                    </label>
+                    <InputText @bind-Value="personas.Telefono" class="form-control" />
+                    <ValidationMessage For="@(() => personas.Telefono)" />
+                    <small id="TelefonoLineHelper" class="text-muted">
+                        El campo Télefono debe de estar lleno.
+                    </small>
+                </div>
+
+                @*Cédula*@
+                <div>
+                    <label>
+                        Cédula:
+                    </label>
+                    <InputText @bind-Value="personas.Cedula" class="form-control" />
+                    <ValidationMessage For="@(() => personas.Cedula)" />
+                    <small id="CedulaLineHelper" class="text-muted">
+                        El campo Cédula debe de estar lleno.
+                    </small>
+                </div>
+
+                @*Dirección*@
+                <div>
+                    <label>
+                        Dirección:
+                    </label>
+                    <InputText @bind-Value="personas.Direccion" class="form-control" />
+                    <ValidationMessage For="@(() => personas.Direccion)" />
+                    <small id="DireccionInLineHelper" class="text-muted">
+                        El campo Dirección debe de estar lleno.
+                    </small>
+                </div>
+
+                @*Fecha de Nacimineto*@
+                <div>
+                    <label>
+                        Fecha de Nacimineto:
+                    </label>
+                    <InputDate @bind-Value="personas.FechaNacimiento" class="form-control" />
+                    <ValidationMessage For="@(() => personas.FechaNacimiento)" />
+                    <small id="FechaNacimientoLineHelper" class="text-muted">
+                        El formato es Mes/Dia/Año
+                    </small>
+                </div>
+            </form>
+        </div>
+        @*Buttons*@
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                    <span class="oi oi-plus"></span> Nuevo
+                </button>
+
+                <button type="submit" class="btn btn-lg btn-success">
+                    <span class="oi oi-clipboard" aria-hidden="true"></span> Guardar
+                </button>
+
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                    <i class="fa fa-trash"></i>
+                    <span class="oi oi-trash"></span>   Eliminar
+                </button>
+
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    Personas personas = new Personas();
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        //Buscar();
+    }
+
+    private void Nuevo()
+    {
+        personas = new Personas();
+    }
+
+   
+    private void Guardar()
+    {
+        bool guardado;
+        guardado = PersonasBLL.Guardar(personas);
+
+        if (guardado)
+        {
+            Nuevo();
+            toast.ShowSuccess("Se Guardo Exitosamente");
+        }
+    }
+
+    private void Buscar()
+    {
+        if (personas.PersonaID > 0)
+        {
+            var encontrado = PersonasBLL.Buscar(personas.PersonaID);
+            if (encontrado != null)
+                this.personas = encontrado;
+            else
+                toast.ShowWarning("No encontrado");
+        }
+    }
+
+    private void Eliminar()
+    {
+        bool eliminado;
+
+        eliminado = PersonasBLL.Eliminar(personas.PersonaID);
+
+        if(eliminado)
+        {
+            Nuevo();
+            toast.ShowSuccess("Se ha Eliminado Correctamente");
+        }
+    }
+}

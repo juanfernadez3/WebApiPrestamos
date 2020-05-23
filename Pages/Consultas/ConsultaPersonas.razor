@@ -1,0 +1,47 @@
+﻿@page "/Consultapersonas"
+@using PrimerRegistro.Models;
+@using PrimerRegistro.BLL;
+
+<h3>Consulta personas</h3>
+
+@if (personas == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Cedula</th>
+                <th>Telefono</th>
+                <th>Fecha Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in personas)
+            {
+                <tr>
+                    <td>@persona.PersonaID</td>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Telefono</td>
+                    <td>@persona.Cedula</td>
+                    <td>@persona.Direccion</td>
+                    <td>@persona.FechaNacimiento.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+
+    private List<Personas> personas = new List<Personas>();
+
+    protected override void OnInitialized()
+    {
+        personas = PersonasBLL.GetList(x => true);
+    }
+}
