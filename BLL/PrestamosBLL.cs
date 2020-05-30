@@ -8,18 +8,18 @@ using PrimerRegistro.Dal;
 using PrimerRegistro.Data;
 using PrimerRegistro.Models;
 
+
 namespace PrimerRegistro.BLL
 {
-    public class PersonasBLL
+    public class PrestamosBLL
     {
-        
         public static bool Existe(int id)
         {
             Contexto contexto = new Contexto();
             bool encontrado = false;
             try
             {
-                encontrado = contexto.Personas.Any(e => e.PersonaID == id);
+                encontrado = contexto.Prestamos.Any(e => e.PrestamoID == id);
             }
             catch
             {
@@ -32,14 +32,15 @@ namespace PrimerRegistro.BLL
             return encontrado;
 
         }
-        public static bool Insertar(Personas persona)
+
+        public static bool Insertar(Prestamos prestamos)
         {
             bool paso = false;
             Contexto db = new Contexto();
 
             try
             {
-                if (db.Personas.Add(persona) != null)
+                if (db.Prestamos.Add(prestamos) != null)
                     paso = db.SaveChanges() > 0;
             }
             catch
@@ -52,22 +53,23 @@ namespace PrimerRegistro.BLL
             }
             return paso;
         }
-        public static bool Guardar(Personas persona)
+
+        public static bool Guardar(Prestamos prestamos)
         {
-            if (!Existe(persona.PersonaID))
-                return Insertar(persona);
+            if (!Existe(prestamos.PrestamoID))
+                return Insertar(prestamos);
             else
-                return Modificar(persona);
+                return Modificar(prestamos);
         }
 
-        public static bool Modificar(Personas persona)
+        public static bool Modificar(Prestamos prestamos)
         {
             bool paso = false;
             Contexto db = new Contexto();
 
             try
             {
-                db.Entry(persona).State = EntityState.Modified;
+                db.Entry(prestamos).State = EntityState.Modified;
                 paso = (db.SaveChanges() > 0);
             }
             catch
@@ -88,11 +90,11 @@ namespace PrimerRegistro.BLL
 
             try
             {
-                var eliminar = db.Personas.Find(id);
+                var eliminar = db.Prestamos.Find(id);
 
-                if(eliminar != null)
+                if (eliminar != null)
                 {
-                    db.Personas.Remove(eliminar);
+                    db.Prestamos.Remove(eliminar);
                     paso = (db.SaveChanges() > 0);
                 }
             }
@@ -107,14 +109,14 @@ namespace PrimerRegistro.BLL
             return paso;
         }
 
-        public static Personas Buscar(int id)
+        public static Prestamos Buscar(int id)
         {
             Contexto contexto = new Contexto();
-            Personas personas;
+            Prestamos prestamos;
 
             try
             {
-                personas = contexto.Personas.Find(id);
+                prestamos = contexto.Prestamos.Find(id);
             }
             catch
             {
@@ -124,17 +126,17 @@ namespace PrimerRegistro.BLL
             {
                 contexto.Dispose();
             }
-            return personas;
+            return prestamos;
         }
 
-        public static List<Personas> GetList(Expression<Func<Personas,bool>> criterio)
+        public static List<Prestamos> GetList(Expression<Func<Prestamos, bool>> criterio)
         {
-            List<Personas> lista = new List<Personas>();
+            List<Prestamos> lista = new List<Prestamos>();
             Contexto contexto = new Contexto();
 
             try
             {
-                lista = contexto.Personas.Where(criterio).ToList();
+                lista = contexto.Prestamos.Where(criterio).ToList();
             }
             catch
             {
@@ -147,5 +149,47 @@ namespace PrimerRegistro.BLL
             return lista;
         }
 
+        public static decimal AumentarPrestamos(decimal Balance, decimal Monto)
+        {
+            Contexto contexto = new Contexto();
+            decimal aux;
+
+            try
+            {
+                aux = Balance + Monto;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return aux;
+        }
+
+        public static void BalancePersona(int id, decimal aux)
+        {
+            Contexto contexto = new Contexto();
+            Personas personas = new Personas();
+            bool paso;
+
+            try
+            {
+                personas = contexto.Personas.Find(id);
+                personas.Balance = aux;
+                paso = (contexto.SaveChanges() > 0);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+        }
     }
 }

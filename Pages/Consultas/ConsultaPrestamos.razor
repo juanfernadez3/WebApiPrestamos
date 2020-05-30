@@ -1,0 +1,47 @@
+﻿@page "/ConsultaPrestamos"
+@using PrimerRegistro.Models;
+@using PrimerRegistro.BLL;
+
+<h3>Consulta Prestamo</h3>
+
+@if (prestamos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PrestamoId</th>
+                <th>PersonaId</th>
+                <th>Concepto</th>
+                <th>Monto</th>
+                <th>Balance</th>
+                <th>Fecha Prestamo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prestamos in prestamos)
+            {
+                <tr>
+                    <td>@prestamos.PrestamoID</td>
+                    <td>@prestamos.PersonaID</td>
+                    <td>@prestamos.Concepto</td>
+                    <td>@prestamos.Monto</td>
+                    <td>@prestamos.Balance</td>
+                    <td>@prestamos.FechaPrestamo.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+
+    private List<Prestamos> prestamos = new List<Prestamos>();
+
+    protected override void OnInitialized()
+    {
+        prestamos = PrestamosBLL.GetList(x => true);
+    }
+}

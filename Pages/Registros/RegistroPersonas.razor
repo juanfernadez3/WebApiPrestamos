@@ -2,11 +2,12 @@
 
 @using PrimerRegistro.Models;
 @using PrimerRegistro.BLL;
+@using PrimerRegistro.Dal;
 
 @inject IToastService toast
 
-<EditForm Model="personas" OnValidSubmit="Guardar" >
-    <DataAnnotationsValidator/>
+<EditForm Model="personas" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header">
             <h3>
@@ -94,8 +95,21 @@
                         El formato es Mes/Dia/Año
                     </small>
                 </div>
+
+
+                @*Balance*@
+                <div>
+                    <label>
+                        Balance:
+                    </label>
+                    <InputNumber readonly @bind-Value="personas.Balance" class="form-control" />
+                    <ValidationMessage For="@(() => personas.Balance)" />
+                    <small id="BalanceInLineHelper" class="text-muted">
+                    </small>
+                </div>
             </form>
         </div>
+
         @*Buttons*@
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
@@ -121,6 +135,7 @@
 
 @code {
     Personas personas = new Personas();
+    Prestamos Prestamos = new Prestamos();
 
     protected override void OnInitialized()
     {
@@ -133,12 +148,12 @@
         personas = new Personas();
     }
 
-   
+
     private void Guardar()
     {
         bool guardado;
         guardado = PersonasBLL.Guardar(personas);
-
+        
         if (guardado)
         {
             Nuevo();
@@ -164,7 +179,7 @@
 
         eliminado = PersonasBLL.Eliminar(personas.PersonaID);
 
-        if(eliminado)
+        if (eliminado)
         {
             Nuevo();
             toast.ShowSuccess("Se ha Eliminado Correctamente");

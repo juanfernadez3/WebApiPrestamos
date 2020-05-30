@@ -22,6 +22,9 @@ namespace PrimerRegistro.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -44,6 +47,44 @@ namespace PrimerRegistro.Migrations
                     b.HasKey("PersonaID");
 
                     b.ToTable("Personas");
+                });
+
+            modelBuilder.Entity("PrimerRegistro.Models.Prestamos", b =>
+                {
+                    b.Property<int>("PrestamoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Concepto")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("FechaPrestamo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PersonaID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PrestamoID");
+
+                    b.HasIndex("PersonaID")
+                        .IsUnique();
+
+                    b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("PrimerRegistro.Models.Prestamos", b =>
+                {
+                    b.HasOne("PrimerRegistro.Models.Personas", "Personas")
+                        .WithOne("Prestamos")
+                        .HasForeignKey("PrimerRegistro.Models.Prestamos", "PersonaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

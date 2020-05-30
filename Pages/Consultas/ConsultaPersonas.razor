@@ -17,31 +17,42 @@ else
                 <th>Nombre</th>
                 <th>Telefono</th>
                 <th>Cedula</th>
-                <th>Telefono</th>
+                <th>Dirección</th>
+                <th>Balance</th>
                 <th>Fecha Nacimiento</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var persona in personas)
             {
-                <tr>
-                    <td>@persona.PersonaID</td>
-                    <td>@persona.Nombre</td>
-                    <td>@persona.Telefono</td>
-                    <td>@persona.Cedula</td>
-                    <td>@persona.Direccion</td>
-                    <td>@persona.FechaNacimiento.ToShortDateString()</td>
-                </tr>
-            }
+                    <tr>
+                        <td>@persona.PersonaID</td>
+                        <td>@persona.Nombre</td>
+                        <td>@persona.Telefono</td>
+                        <td>@persona.Cedula</td>
+                        <td>@persona.Direccion</td>
+                        <td>@persona.Balance</td>
+                        <td>@persona.FechaNacimiento.ToShortDateString()</td>
+
+                    </tr>
+             }
         </tbody>
     </table>
+
+
 }
 @code {
 
     private List<Personas> personas = new List<Personas>();
+    private List<Prestamos> prestamos = new List<Prestamos>();
 
     protected override void OnInitialized()
     {
         personas = PersonasBLL.GetList(x => true);
+        prestamos = PrestamosBLL.GetList(y => true);
+
     }
+
+
+
 }

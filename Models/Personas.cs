@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using PrimerRegistro.Models;
 
 namespace PrimerRegistro.Models
 {
@@ -23,8 +24,14 @@ namespace PrimerRegistro.Models
         [Required(ErrorMessage = "La Dirección es Obligatoria.")]
         public string Direccion { get; set; }
 
+        public decimal Balance { get; set; }
+
         [Required(ErrorMessage = "La Fecha de Nacimineto es Obligatoria.")]
         public DateTime FechaNacimiento { get; set; }
+
+
+
+        public Prestamos Prestamos { get; set; }
 
         public Personas()
         {
@@ -33,6 +40,7 @@ namespace PrimerRegistro.Models
             Telefono = string.Empty;
             Cedula = string.Empty;
             Direccion = string.Empty;
+            Balance = 0;
             FechaNacimiento = DateTime.Now;
         }
     }
