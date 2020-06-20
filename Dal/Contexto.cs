@@ -11,6 +11,8 @@ namespace PrimerRegistro.Dal
     {
         public DbSet<Personas> Personas { get; set; }
         public DbSet<Prestamos> Prestamos { get; set; }
+        public DbSet<Moras> Moras { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

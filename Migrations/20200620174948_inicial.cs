@@ -8,11 +8,25 @@ namespace PrimerRegistro.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Moras",
+                columns: table => new
+                {
+                    MoraId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Moras", x => x.MoraId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Personas",
                 columns: table => new
                 {
                     PersonaID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(nullable: false),
                     Telefono = table.Column<string>(nullable: false),
                     Cedula = table.Column<string>(nullable: false),
@@ -26,11 +40,32 @@ namespace PrimerRegistro.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MorasDetalle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MoraId = table.Column<int>(nullable: false),
+                    PrestamoId = table.Column<int>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MorasDetalle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MorasDetalle_Moras_MoraId",
+                        column: x => x.MoraId,
+                        principalTable: "Moras",
+                        principalColumn: "MoraId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Prestamos",
                 columns: table => new
                 {
                     PrestamoID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Concepto = table.Column<string>(nullable: true),
                     Monto = table.Column<decimal>(nullable: false),
                     Balance = table.Column<decimal>(nullable: false),
@@ -49,6 +84,11 @@ namespace PrimerRegistro.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_MorasDetalle_MoraId",
+                table: "MorasDetalle",
+                column: "MoraId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Prestamos_PersonaID",
                 table: "Prestamos",
                 column: "PersonaID",
@@ -58,7 +98,13 @@ namespace PrimerRegistro.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "MorasDetalle");
+
+            migrationBuilder.DropTable(
                 name: "Prestamos");
+
+            migrationBuilder.DropTable(
+                name: "Moras");
 
             migrationBuilder.DropTable(
                 name: "Personas");

@@ -1,0 +1,40 @@
+﻿@page "/ConsultaMoras"
+@using PrimerRegistro.Models;
+@using PrimerRegistro.BLL;
+<h3>Consulta Moras</h3>
+
+@if (moras == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>MoraId</th>
+                <th>Fecha</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mora in moras)
+            {
+            <tr>
+                <td>@mora.MoraId</td>
+                <td>@mora.Fecha.ToShortDateString()</td>
+                <td>@mora.Total</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+
+    private List<Moras> moras = new List<Moras>();
+
+    protected override void OnInitialized()
+    {
+        moras = MorasBLL.GetList(x => true);
+    }
+}

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrimerRegistro", "PrimerReg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimerRegistroTests", "..\PrimerRegistroTests\PrimerRegistroTests.csproj", "{DDFB4CF9-FB4E-4099-95CE-EEFA3CA38785}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimerRegistroTests1", "..\PrimerRegistroTests1\PrimerRegistroTests1.csproj", "{FDF58E78-E431-4E5A-9565-1C1CB84DE8A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DDFB4CF9-FB4E-4099-95CE-EEFA3CA38785}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDFB4CF9-FB4E-4099-95CE-EEFA3CA38785}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDFB4CF9-FB4E-4099-95CE-EEFA3CA38785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDF58E78-E431-4E5A-9565-1C1CB84DE8A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDF58E78-E431-4E5A-9565-1C1CB84DE8A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDF58E78-E431-4E5A-9565-1C1CB84DE8A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDF58E78-E431-4E5A-9565-1C1CB84DE8A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
