@@ -12,7 +12,7 @@ namespace PrimerRegistro.Migrations
                 columns: table => new
                 {
                     MoraId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Fecha = table.Column<DateTime>(nullable: false),
                     Total = table.Column<decimal>(nullable: false)
                 },
@@ -26,7 +26,7 @@ namespace PrimerRegistro.Migrations
                 columns: table => new
                 {
                     PersonaID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(nullable: false),
                     Telefono = table.Column<string>(nullable: false),
                     Cedula = table.Column<string>(nullable: false),
@@ -44,7 +44,7 @@ namespace PrimerRegistro.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     MoraId = table.Column<int>(nullable: false),
                     PrestamoId = table.Column<int>(nullable: false),
                     Valor = table.Column<decimal>(nullable: false)
@@ -65,7 +65,7 @@ namespace PrimerRegistro.Migrations
                 columns: table => new
                 {
                     PrestamoID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Concepto = table.Column<string>(nullable: true),
                     Monto = table.Column<decimal>(nullable: false),
                     Balance = table.Column<decimal>(nullable: false),
