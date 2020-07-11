@@ -9,8 +9,8 @@ using PrimerRegistro.Dal;
 namespace PrimerRegistro.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200710032238_inicial")]
-    partial class inicial
+    [Migration("20200711194952_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
